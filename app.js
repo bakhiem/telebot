@@ -13,29 +13,46 @@ app.listen(port, err => {
   if (err) console.log(err);
   console.log("Server started at port " + port);
 });
-let oldBalance = 0
+let oldBalanceGo = -1
+let oldBalanceMatrix = -1
 setInterval(() => {
   axios
   .get('https://api.bscscan.com/api?module=account&action=balance&address=0x02B1F22084ECE5962d4322c19ee0593EF345A14c&apikey=SDBDFW86Q225QFAJDYFVPIHPC4NENKCBU2')
   .then(response => {
     const balance = Number(response.data.result/1000000000000000000)
-    if(balance === oldBalance) {
+    console.log('vao day bnbgo', balance)
+    if(balance === oldBalanceGo) {
       return
     }
-    oldBalance = balance
-    console.log('vao day')
-    if(balance !== 0) {
+    oldBalanceGo = balance
+    if(balance != 0) {
       debounce_fun(balance.toFixed(3))
+    }
+  })
+  axios
+  .get('https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0xe9e7cea3dedca5984780bafc599bd69add087d56&address=0x11c7ce317ea4d5d768defaff6f5183f94b3f252b&tag=latest&apikey=9WVEQZK29NFBP1HFMA88VUXSVSCWEVN86T')
+  .then(response => {
+    let balance = Number(response.data.result/1000000000000000000)
+    balance = balance.toFixed(0)
+    console.log('vao day matrix', balance)
+    if(balance === oldBalanceMatrix) {
+      return
+    }
+    oldBalanceMatrix = balance
+    if(balance != 0) {
+      debounce_funMatrix(balance)
     }
   })
 }, 1500)
 
   var debounce_fun = _.throttle(function (balance) {
-    console.log(`vao day 2 ${balance}`)
-    sendMessage(`New deposit ${balance} bnb` )
+    sendMessage(`BNB go has new balance ${balance} bnb` )
+  }, 60000);
+  var debounce_funMatrix = _.throttle(function (balance) {
+    sendMessage(`BUSDMATRIX has new balance ${balance} busd` )
   }, 60000);
   const sendMessage = (text) => {
-    console.log(`vao day 3 ${text}`)
+    console.log(`-------vao day 3 ${text}`)
 
     axios
       .post('https://api.telegram.org/bot5064516047:AAF0DgEo8E1JeTnFXWBJ9ZU6bMZt4enhI1w/sendMessage', {
