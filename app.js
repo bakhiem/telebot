@@ -1,11 +1,14 @@
 const express = require("express");
-const path = require("path");
 const axios = require('axios')
 const app = express();
 const _ = require('lodash')
 
+var http = require("http");
 const port = process.env.PORT || 6969;
 
+setInterval(function() {
+    http.get("https://notitelebot.herokuapp.com");
+}, 300000); // every 5 minutes (300000)
 app.listen(port, err => {
   if (err) console.log(err);
   console.log("Server started at port " + port);
