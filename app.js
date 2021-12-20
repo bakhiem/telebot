@@ -13,11 +13,16 @@ app.listen(port, err => {
   if (err) console.log(err);
   console.log("Server started at port " + port);
 });
+let oldBalance = 0
 setInterval(() => {
   axios
   .get('https://api.bscscan.com/api?module=account&action=balance&address=0x02B1F22084ECE5962d4322c19ee0593EF345A14c&apikey=SDBDFW86Q225QFAJDYFVPIHPC4NENKCBU2')
   .then(response => {
     const balance = Number(response.data.result/1000000000000000000)
+    if(balance === oldBalance) {
+      return
+    }
+    oldBalance = balance
     console.log('vao day')
     if(balance !== 0) {
       debounce_fun(balance.toFixed(3))
