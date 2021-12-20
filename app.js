@@ -15,8 +15,8 @@ setInterval(() => {
   .get('https://api.bscscan.com/api?module=account&action=balance&address=0x02B1F22084ECE5962d4322c19ee0593EF345A14c&apikey=SDBDFW86Q225QFAJDYFVPIHPC4NENKCBU2')
   .then(response => {
     const balance = Number(response.data.result/1000000000000000000)
+    console.log('vao day')
     if(balance !== 0) {
-      console.log('vao day')
       debounce_fun(balance.toFixed(3))
     }
   })
