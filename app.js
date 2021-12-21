@@ -25,7 +25,7 @@ setInterval(() => {
       return
     }
     oldBalanceGo = balance
-    if(balance != 0) {
+    if(balance > 0.5) {
       debounce_fun(balance.toFixed(3))
     }
   })
@@ -39,7 +39,7 @@ setInterval(() => {
       return
     }
     oldBalanceMatrix = balance
-    if(balance != 0) {
+    if(balance > 500) {
       debounce_funMatrix(balance)
     }
   })
