@@ -29,28 +29,27 @@ setInterval(() => {
       debounce_fun(balance.toFixed(3))
     }
   })
-  // axios
-  // .get('https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0xe9e7cea3dedca5984780bafc599bd69add087d56&address=0x11c7ce317ea4d5d768defaff6f5183f94b3f252b&tag=latest&apikey=9WVEQZK29NFBP1HFMA88VUXSVSCWEVN86T')
-  // .then(response => {
-  //   let balance = Number(response.data.result/1000000000000000000)
-  //   balance = balance.toFixed(0)
-  //   console.log('vao day matrix', balance)
-  //   if(balance === oldBalanceMatrix) {
-  //     return
-  //   }
-  //   oldBalanceMatrix = balance
-  //   if(balance > 500) {
-  //     debounce_funMatrix(balance)
-  //   }
-  // })
+  axios
+  .get('https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress=0xe9e7cea3dedca5984780bafc599bd69add087d56&address=0x5a14D961B2Cd0e69e7DE0EB0F5D4E77bad64654f&tag=latest&apikey=9WVEQZK29NFBP1HFMA88VUXSVSCWEVN86T')
+  .then(response => {
+    let balance = Number(response.data.result/1000000000000000000)
+    console.log('vao day bscevo', balance)
+    if(balance === oldBalanceMatrix) {
+      return
+    }
+    oldBalanceMatrix = balance
+    if(balance > 0.05) {
+      debounce_funMatrix(balance.toFixed(3))
+    }
+  })
 }, 1500)
 
   var debounce_fun = _.throttle(function (balance) {
     sendMessage(`BNB go has new balance ${balance} bnb` )
   }, 60000);
-  // var debounce_funMatrix = _.throttle(function (balance) {
-  //   sendMessage(`BUSDMATRIX has new balance ${balance} busd` )
-  // }, 60000);
+  var debounce_funMatrix = _.throttle(function (balance) {
+    sendMessage(`BSCEVO has new balance ${balance} bnb` )
+  }, 60000);
   const sendMessage = (text) => {
     console.log(`-------vao day 3 ${text}`)
 
